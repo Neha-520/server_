@@ -13,6 +13,7 @@
   "author": "Neha",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^4.1.2"
+    "chalk": "^4.1.2",
+    "validator": "^13.6.0"
   }
 }

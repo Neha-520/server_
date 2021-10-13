@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //connection creation and creating  a new db if not present
-mongoose.connect("mongodb://localhost:27017/mydb", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost:27017/mydb", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => console.log("connected successfully"))
     .catch((err) => console.log(err));
 
@@ -11,9 +11,22 @@ const playlistSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true, //not a validator
+        //lowecase : true,uppercase:true,minlength:[2,"minimum 2 letters"],
+        //maxlength : 30,trim:true
     },
-    ctype: String,
-    videos: Number,
+    ctype: {
+        type: String,
+        enum: ["Front End", "Back End", "Database"],
+    },
+    videos: {
+        type: Number,
+        validate(value) {
+            if (value < 0) {
+                throw new Error("videos count cant be -ve");
+            }
+        }
+    }, Number,
     author: String,
     active: Boolean,
     date: {

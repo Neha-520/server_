@@ -60,18 +60,21 @@ const createDocument = async () => {
         console.log(err);
     }
 }
-// createDocument();
+//createDocument();
 
 const getDocument = async () => {
     try {
         // const result = await Playlist.
         //     find({ ctype: { $nin: ["Back End", "Database", "Backend"] } })
         //     .select({ name: 1 })
-
         // .limit(1);
         const result = await Playlist.
-            find({ $and: [{ ctype: "Back End" }, { author: "Neha" }] })
-            .select({ name: 1 });
+            find(
+                // { $and: [{ ctype: "Back End" }, { author: "Neha" }] })
+                { author: "Neha" })
+            .select({ name: 1 })
+            .sort({ name: -1 });
+        // .countDocuments();
         console.log(result);
     } catch (err) {
         console.log(err);
@@ -79,3 +82,28 @@ const getDocument = async () => {
 }
 
 getDocument();
+
+//update the doc
+const updateDocument = async (id) => {
+    try {
+        const result = await Playlist.updateOne({ _id: id }, {
+            $set: { ctype: "Back End" }
+        });
+        console.log(result);
+    } catch (err) { console.log(err); }
+}
+
+
+updateDocument("61669e0c815aaced3b806d32");
+
+//delete the documents
+
+const deleteDocument = async (id) => {
+    try {
+        const result = await Playlist.deleteOne({ _id: id }, {
+            $set: { ctype: "Back End" }
+        });
+        console.log(result);
+    } catch (err) { console.log(err); }
+}
+deleteDocument("61669e0c815aaced3b806d32");

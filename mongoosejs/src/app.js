@@ -48,7 +48,7 @@ const createDocument = async () => {
         })
         const expressPlaylist = new Playlist({
             name: "Express JS",
-            ctype: "Backend",
+            ctype: "Back End",
             videos: 20,
             author: "Neha",
             active: true,
@@ -60,13 +60,18 @@ const createDocument = async () => {
         console.log(err);
     }
 }
-createDocument();
+// createDocument();
 
 const getDocument = async () => {
     try {
-        const result = await Playlist.find({ ctype: "Database" })
-            .select({ name: 1 })
-            .limit(1);
+        // const result = await Playlist.
+        //     find({ ctype: { $nin: ["Back End", "Database", "Backend"] } })
+        //     .select({ name: 1 })
+
+        // .limit(1);
+        const result = await Playlist.
+            find({ $and: [{ ctype: "Back End" }, { author: "Neha" }] })
+            .select({ name: 1 });
         console.log(result);
     } catch (err) {
         console.log(err);

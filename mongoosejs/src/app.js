@@ -26,4 +26,51 @@ const playlistSchema = new mongoose.Schema({
 
 //its a class now
 // collection creation
+//pascal convention
 const Playlist = new mongoose.model("Playlist", playlistSchema);
+
+//create document
+const createDocument = async () => {
+    try {
+        const jsPlaylist = new Playlist({
+            name: "Javascript",
+            ctype: "Front End",
+            videos: 150,
+            author: "Neha",
+            active: true,
+        })
+        const mongoPlaylist = new Playlist({
+            name: "MongoDB",
+            ctype: "Database",
+            videos: 10,
+            author: "Neha",
+            active: true,
+        })
+        const expressPlaylist = new Playlist({
+            name: "Express JS",
+            ctype: "Backend",
+            videos: 20,
+            author: "Neha",
+            active: true,
+        })
+
+        const result = await Playlist.insertMany([jsPlaylist, mongoPlaylist, expressPlaylist]);
+        console.log(result);
+    } catch (err) {
+        console.log(err);
+    }
+}
+createDocument();
+
+const getDocument = async () => {
+    try {
+        const result = await Playlist.find({ ctype: "Database" })
+            .select({ name: 1 })
+            .limit(1);
+        console.log(result);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+getDocument();
